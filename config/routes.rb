@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  apipie
+  namespace :api do
+    namespace :v1 do
+      resources :url_generator, :only => [:new, :destroy], :defaults => {:format => :json}
+    end
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
