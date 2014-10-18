@@ -1,24 +1,25 @@
 class Api::V1::SessionsController < ApplicationController
   respond_to :json
-
   api :GET, "/sessions/new", "Generate new and unique URL"
 
   def new
-    unique_url = loop do
+    session = loop do
       unique_url = Digest::SHA1.hexdigest([Time.now, rand].join)
 
-      unless $redis.exists(unique_url)
-        $redis.set(unique_url, {})
-        break unique_url
+      unless Session.exists?(unique_url)
+        break Session.create(uniq_hash: unique_url)
       end
     end
 
-    respond_with(BASE_URL + unique_url)
+    resp = {id: session.id, url: BASE_URL + session.uniq_hash}
+    respond_with(resp)
   end
 
-  api :DELETE, "/sessions/:unique_hash", "Destroy the URL"
+  api :DELETE, "/sessions/:id", "Destroy the URL"
 
   def destroy
-    respond_with($redis.del(params[:id]))
+    session = Session.find(params[:id])
+
+    respond_with(session.try(:destroy))
   end
 end

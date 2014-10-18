@@ -21,3 +21,6 @@ module Annotewithme
     # config.i18n.default_locale = :de
   end
 end
+
+require Rails.root + 'app/models/session'
+DataMapper.finalize
