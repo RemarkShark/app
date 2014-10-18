@@ -7,7 +7,7 @@ class Annotation
   # datamapper fields, just used for .create
   property :id, Serial
   property :text, Text, :required => true
-  property :shapes, Text, :required => true
+  property :shapes, Json, :required => true
   property :context, Text
   timestamps :at
 

@@ -3,7 +3,7 @@ class Session
   include DataMapper::Resource
 
   validates_uniqueness_of :uniq_hash
-  has n, :annotations
+  has n, :annotations, constraint: :destroy
 
   # datamapper fields, just used for .create
   property :id, Serial

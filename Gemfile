@@ -39,6 +39,8 @@ gem 'redis-objects'
 gem 'dm-redis-adapter'
 gem 'dm-timestamps'
 gem 'dm-serializer'
+gem 'dm-constraints'
+gem 'dm-migrations'
 
 group :production do
   gem "pg"
