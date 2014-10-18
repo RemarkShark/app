@@ -31,6 +31,8 @@ gem 'spring',        group: :development
 
 # simple Angular.js wrapper for Rails
 gem 'angularjs-rails'
+gem 'redis'
+gem 'redis-namespace'
 
 # group :production do
 #   gem "pg"
