@@ -13,7 +13,7 @@ class Api::V1::UrlGeneratorController < ApplicationController
       end
     end
 
-    respond_with({url: BASE_URL + unique_url})
+    respond_with(BASE_URL + unique_url)
   end
 
   api :DELETE, "/url_generator/:unique_hash", "Destroy the URL"
