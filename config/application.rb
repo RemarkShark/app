@@ -2,6 +2,10 @@ require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
 
+# To use these classes & their methods in models
+require 'dm-types'
+require 'dm-validations'
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -21,3 +25,6 @@ module Annotewithme
     # config.i18n.default_locale = :de
   end
 end
+
+%w(session annotation).each { |model| require Rails.root + "app/models/#{model}" }
+DataMapper.finalize
