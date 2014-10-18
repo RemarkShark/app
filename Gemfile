@@ -36,8 +36,9 @@ gem 'redis'
 gem 'redis-namespace'
 gem 'apipie-rails'
 gem 'redis-objects'
-gem "dm-core"
-gem "dm-redis-adapter"
+gem 'dm-redis-adapter'
+gem 'dm-timestamps'
+gem 'dm-serializer'
 
 group :production do
   gem "pg"

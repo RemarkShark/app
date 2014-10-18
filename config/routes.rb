@@ -3,7 +3,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :sessions, :only => [:new, :destroy], :defaults => {:format => :json}
+      resources :sessions, :only => [:create, :destroy], :defaults => {:format => :json} do
+        resources :annotations, :except => :new
+      end
     end
   end
 

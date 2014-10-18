@@ -2,12 +2,14 @@ class Session
   include Redis::Objects
   include DataMapper::Resource
 
-  # validates_is_unique :uniq_hash
-  # has n, :pictures
+  validates_uniqueness_of :uniq_hash
+  has n, :annotations
 
   # datamapper fields, just used for .create
   property :id, Serial
-  property :uniq_hash, Text
+  property :uniq_hash, Text, :required => true, :index => true
+  property :img_src, Text, :required => true
+  timestamps :at
 
   def self.exists?(uniq_hash)
     session = self.map { |s| break s if s.uniq_hash == uniq_hash }
