@@ -1,7 +1,7 @@
-class Api::V1::UrlGeneratorController < ApplicationController
+class Api::V1::SessionsController < ApplicationController
   respond_to :json
 
-  api :GET, "/url_generator/new", "Generate new and unique URL"
+  api :GET, "/sessions/new", "Generate new and unique URL"
 
   def new
     unique_url = loop do
@@ -13,10 +13,10 @@ class Api::V1::UrlGeneratorController < ApplicationController
       end
     end
 
-    respond_with(unique_url)
+    respond_with(BASE_URL + unique_url)
   end
 
-  api :DELETE, "/url_generator/:unique_hash", "Destroy the URL"
+  api :DELETE, "/sessions/:unique_hash", "Destroy the URL"
 
   def destroy
     respond_with($redis.del(params[:id]))
