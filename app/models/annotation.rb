@@ -17,6 +17,13 @@ class Annotation
     time = (time ? DateTime.strptime(time, '%s') : Time.at(nil.to_i))
     annotations = self.map { |a| a if a.updated_at > time && a.session_id == session_id.to_i }
     annotations.delete(nil)
-    annotations
+    annotes = []
+
+    annotations.each do |annotation|
+      annotation.src = annotation.session.img_src unless annotation.src
+      annotes << annotation
+    end
+
+    annotes
   end
 end
