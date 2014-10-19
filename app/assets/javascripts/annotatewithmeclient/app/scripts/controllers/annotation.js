@@ -30,7 +30,7 @@ angular.module('annotatewithmeApp')
         applyPhase();
         console.log("annots", annots);
         angular.forEach(annots, function (obj) {
-          console.log("obj", JSON.serialize(obj));
+          console.log("obj", JSON.stringify(obj));
           var annotation = obj.value;
           console.log("annotation", annotation);
           $scope.annotations.push(annotation);
