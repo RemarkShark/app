@@ -5,15 +5,22 @@ class Api::V1::SessionsController < ApplicationController
   param :img_src, String, "Direct Image URL for the session", :required => true
 
   api :GET, "/sessions/:id", "Fetch a session by uniq_hash"
-  def show 
+
+  def show
     session = Session.find_by_uniq_hash(params[:id])
     respond_with session
   end
-  
-  def create
-    session = Session.create(img_src: params[:img_src])
 
-    session.path = "/sessions/#{session.id}"
+  def create
+    session = loop do
+      unique_url = Digest::SHA1.hexdigest([Time.now, rand].join)
+
+      unless Session.exists?(unique_url)
+        break Session.create(uniq_hash: unique_url, img_src: params[:img_src])
+      end
+    end
+
+    #session.uniq_hash = "/sessions/#{session.uniq_hash}"
     respond_with(session, :location => api_v1_sessions_url(session))
   end
 
