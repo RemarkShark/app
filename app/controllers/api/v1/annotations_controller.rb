@@ -55,7 +55,7 @@ class Api::V1::AnnotationsController < ApplicationController
 
   private
   def annotation_params
-    annote = JSON.parse(params.require(:annotation))
+    annote = params.require(:annotation)
     {text: annote['text'], shapes: annote['shapes'], context: annote['context'], session_id: params[:session_id]}
   end
 
