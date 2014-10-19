@@ -8,10 +8,13 @@
  * Controller of the annotatewithmeApp
  */
 angular.module('annotatewithmeApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+    .controller('MainCtrl', function ($scope, $location, $timeout) {
+      $scope.joinSession = function (sessionId) {
+        if (sessionId) {
+          $timeout(function () {
+            $location.path("/sessions/" + sessionId);
+          })
+
+        }
+      };
+    });

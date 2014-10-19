@@ -1,6 +1,15 @@
-<img src="http://annotorious.github.io/img/splash-image-1.jpg" annotorious>
-<h1>Listing Annotations:</h1>
-<button ng-click="getAnnotations()">Click here</button>
-<ul>
-  <li ng-repeat="item in annotations">{{item.text}}</li>
-</ul>
+
+
+    <div class="row">
+      <div class="col-md-9">
+        <img style="width:100%" src="https://farm8.staticflickr.com/7050/6921262309_3e13d62965_o_d.jpg" annotorious>
+      </div>
+      <div class="col-md-3">
+
+        <h3>Annotations:</h3>
+        <button ng-click="getAnnotations()">Click here</button>
+        <ul>
+          <li ng-repeat="item in annotations">{{item.text}}</li>
+        </ul>
+      </div>
+    </div>
