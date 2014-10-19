@@ -24,4 +24,30 @@ class Api::V1::SessionsController < ApplicationController
 
     respond_with(session.try(:destroy))
   end
+
+  api :GET, "/sessions/:id/transactions", "Fetch all updates associated with a session"
+  param :after, Integer, "Unix epoch time i.e. '1413618126'. You will get updates that were happened after this time"
+  param :filters, Array, "To fetch particular type of updates. Eg.: 'annotations' (the only type that we are supporting currently)"
+
+  def transactions
+    filters = params[:filters] ? JSON.parse(params[:filters]) : []
+    session = Session.find(params[:id])
+    objects = []
+
+    if session
+      if filters.empty?
+        objects = Annotation.find_all_updates_after(params[:after], session.id)
+      else
+        filters.each do |filter|
+          objects << eval(filter.classify).find_all_updates_after(params[:after], session.id)
+        end
+      end
+
+      objects = objects.map do |object|
+        {:type => "create", :object => object}
+      end
+    end
+
+    respond_with(objects)
+  end
 end

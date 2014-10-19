@@ -18,6 +18,7 @@ class Api::V1::AnnotationsController < ApplicationController
   api :POST, "/sessions/:session_id/annotations", "Create new annotation for a session"
 
   def create
+    # TODO: Confirm that session has exists
     annotation = Annotation.create(annotation_params)
 
     respond_with(annotation, :location => api_v1_session_annotation_url(params[:session_id], annotation))
