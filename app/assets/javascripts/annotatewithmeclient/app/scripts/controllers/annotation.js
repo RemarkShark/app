@@ -29,6 +29,14 @@ angular.module('annotatewithmeApp')
         applyPhase();
       };
 
+      $scope.addHighlight = function(annotation){
+      	anno.highlightAnnotation(annotation);
+      };
+
+      $scope.removeHighlight = function(){
+      	anno.highlightAnnotation();
+      };
+
       $scope.$on("annotorious-ready", function () {
         AnnotationsService.getAnnotations(getAnnotationCallback);
       });
@@ -40,7 +48,7 @@ angular.module('annotatewithmeApp')
       });
 
       anno.addHandler('onAnnotationRemoved', function (annotation) {
-        AnnotationsService.deleteAnnotation($scope.annotations.indexOf(annotation));
+        AnnotationsService.deleteAnnotation(annotation["id"]);
         $scope.annotations.splice($scope.annotations.indexOf(annotation), 1);
         applyPhase();
       });
@@ -52,7 +60,7 @@ angular.module('annotatewithmeApp')
           delete dup_item["text"];
           delete dup_annotation["text"];
           if (JSON.stringify(dup_item) == JSON.stringify(dup_annotation)) {
-            AnnotationsService.updateAnnotation($scope.annotations.indexOf(item), annotation);
+            AnnotationsService.updateAnnotation(item["id"], annotation);
             return false;
           }
           return true;

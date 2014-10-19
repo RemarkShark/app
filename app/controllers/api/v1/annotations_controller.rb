@@ -1,11 +1,11 @@
 class Api::V1::AnnotationsController < ApplicationController
   respond_to :json
-  before_filter :get_session, :only => :index
+  before_filter :get_session
 
   api :GET, "/sessions/:session_id/annotations", "Get all annotations associated with a session"
 
   def index
-    respond_with(@session.annotations, :location => api_v1_session_annotations_url(@session))
+    respond_with(@session.persisted_annotations, :location => api_v1_session_annotations_url(@session))
   end
 
   api :GET, "/sessions/:session_id/annotations/:id", "Get annotation by id for a session"
@@ -42,7 +42,14 @@ class Api::V1::AnnotationsController < ApplicationController
   api :DELETE, "/sessions/:session_id/annotations/:id", "Destroy an annotation from a session"
 
   def destroy
-    respond_with(get_annotation.try(:destroy), :location => api_v1_session_annotations_url(params[:session_id]))
+    annotation = get_annotation
+
+    if annotation
+      annotation.is_deleted = true
+      annotation.save
+    end
+
+    respond_with(annotation, :location => api_v1_session_annotations_url(params[:session_id]))
   end
 
   private
@@ -52,10 +59,20 @@ class Api::V1::AnnotationsController < ApplicationController
   end
 
   def get_annotation
-    Annotation.find_id_and_session_id(params[:id], params[:session_id])
+    annotations = @session.persisted_annotations.map do |a|
+      break a if a.id == params[:id].to_i
+    end
+
+    if annotations.is_a?(Array)
+      annotations.delete(nil)
+      annotations.first
+    else
+      annotations
+    end
   end
 
   def get_session
     @session = Session.find(params[:session_id])
   end
+
 end

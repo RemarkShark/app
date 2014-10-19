@@ -9,10 +9,13 @@ class Annotation
   property :text, Text, :required => true
   property :shapes, Json, :required => true
   property :context, Text
+  property :is_deleted, Boolean, :default => false
   timestamps :at
 
-  def self.find_id_and_session_id(id, session_id)
-    annotation = self.map { |a| break a if a.id == id.to_i && a.session_id == session_id.to_i }
-    annotation.is_a?(Array) ? annotation.first : annotation
+  def self.find_all_updates_after(time, session_id)
+    time = (time ? DateTime.strptime(time, '%s') : Time.at(nil.to_i))
+    annotations = self.map { |a| a if a.updated_at > time && a.session_id == session_id.to_i }
+    annotations.delete(nil)
+    annotations
   end
 end
