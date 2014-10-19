@@ -47,7 +47,6 @@ angular.module('annotatewithmeApp')
       }else{
         new_id = '"'+id+'"';
       }
-      console.log(new_id);
       db.where('record.key == '+new_id, function(annotation){
         if(annotation.length != 0){
         annotation = annotation[0];
@@ -60,6 +59,15 @@ angular.module('annotatewithmeApp')
       }
       });
     };
+    this.findAndInsert = function(id, callback){
+       var new_id;
+      if(typeof id == "number"){
+        new_id = id
+      }else{
+        new_id = '"'+id+'"';
+      }
+      db.where('record.key == '+new_id, callback);
+    };
     this.deleteAll = function(){
       db.nuke();
     };
@@ -69,11 +77,9 @@ angular.module('annotatewithmeApp')
     this.getLatestAnnotation = function(callback){
       db.where('record.value.persisted == true', function(annotations){
         if(annotations.length > 0){
-          console.log("safe");
           var latest = _.max(annotations, function(annotation){ return (new Date(annotation.value.updated_at)); });
           callback(parseInt(new Date(latest.value.updated_at).getTime()/1000));
         }else{
-          console.log("exception");
           callback(parseInt((new Date(new Date() - 3600000)).getTime()/1000));
         }
       });

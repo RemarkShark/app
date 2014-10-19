@@ -107,6 +107,14 @@ body {
   cursor: pointer;
 }
 
+.small_font{
+	font-size: 14px;
+}
+
+#heading-color{
+	color: #008000;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {

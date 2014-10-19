@@ -13,7 +13,7 @@ angular.module('annotatewithmeApp')
       anno.destroy();
 
       $scope.session = JSON.parse(sessionStorage.getItem($routeParams.sessionId));
-      //console.log($scope.session);
+
       $scope.session.imgSrc = $scope.session["img_src"];
 
       $scope.annotations = [];
@@ -30,7 +30,6 @@ angular.module('annotatewithmeApp')
         applyPhase();
         angular.forEach(annots, function (obj) {
           var annotation = obj.value;
-          console.log("in get annotation", annotation);
           $scope.annotations.push(annotation);
           anno.addAnnotation(annotation);
         });
@@ -72,7 +71,6 @@ angular.module('annotatewithmeApp')
           var dup_annotation = $.extend(true, dup_annotation, annotation);
           delete dup_item["text"];
           delete dup_annotation["text"];
-          console.log(dup_item, dup_annotation);
           if (JSON.stringify(dup_item) == JSON.stringify(dup_annotation)) {
             AnnotationsService.updateAnnotation(item["id"], annotation);
             return false;
