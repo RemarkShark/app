@@ -9,7 +9,6 @@ class Session
   property :id, Serial
   property :uniq_hash, Text, :required => true, :index => true
   property :img_src, Text, :required => true
-  # property :path, String
   timestamps :at
 
   def self.exists?(uniq_hash)

@@ -1,15 +1,15 @@
 class Api::V1::SessionsController < ApplicationController
   respond_to :json
 
-  api :POST, "/sessions", "Generate new and unique URL (session)"
-  param :img_src, String, "Direct Image URL for the session", :required => true
-
-  api :GET, "/sessions/:id", "Fetch a session by uniq_hash"
+  api :GET, "/sessions/:id", "Fetch a session by uniq_hash. Keep in mind that here `:id` will be considered as `uniq_hash`"
 
   def show
     session = Session.find_by_uniq_hash(params[:id])
-    respond_with session
+    respond_with(session)
   end
+
+  api :POST, "/sessions", "Generate new and unique URL (session)"
+  param :img_src, String, "Direct Image URL for the session", :required => true
 
   def create
     session = loop do
@@ -20,7 +20,6 @@ class Api::V1::SessionsController < ApplicationController
       end
     end
 
-    #session.uniq_hash = "/sessions/#{session.uniq_hash}"
     respond_with(session, :location => api_v1_sessions_url(session))
   end
 
