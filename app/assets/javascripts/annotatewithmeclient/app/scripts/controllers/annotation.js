@@ -9,6 +9,9 @@
  */
 angular.module('annotatewithmeApp')
     .controller('AnnotationCtrl', ["$scope", "AnnotationsService", function ($scope, AnnotationsService) {
+
+      anno.destroy();
+
       $scope.annotations = [];
 
       var applyPhase = function () {
