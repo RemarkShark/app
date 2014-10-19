@@ -13,6 +13,7 @@ angular.module('annotatewithmeApp')
       anno.destroy();
 
       $scope.session = JSON.parse(sessionStorage.getItem($routeParams.sessionId));
+      //console.log($scope.session);
       $scope.session.imgSrc = $scope.session["img_src"];
 
       $scope.annotations = [];
@@ -24,12 +25,16 @@ angular.module('annotatewithmeApp')
       };
 
       var getAnnotationCallback = function (annots) {
+        anno.removeAll();
+        $scope.annotations = [];
+        applyPhase();
+        console.log("annots", annots);
         angular.forEach(annots, function (obj) {
+          console.log("obj", JSON.serialize(obj));
           var annotation = obj.value;
-          if($scope.annotations.indexOf(annotation) == -1){
-          	$scope.annotations.push(annotation);
-          	anno.addAnnotation(annotation);
-          }
+          console.log("annotation", annotation);
+          $scope.annotations.push(annotation);
+          anno.addAnnotation(annotation);
         });
         applyPhase();
       };
@@ -43,11 +48,13 @@ angular.module('annotatewithmeApp')
       };
 
       $scope.$on("annotorious-ready", function () {
-        var annotations_poll = function(){
-      		AnnotationsService.getAllUndeleted(getAnnotationCallback);
-      	};
-      	$timeout(annotations_poll, 5000);
+      	AnnotationsService.getAllUndeleted(getAnnotationCallback);
       });
+
+      $scope.$on("annotations-changed", function () {
+        AnnotationsService.getAllUndeleted(getAnnotationCallback);
+      });
+      
 
       anno.addHandler('onAnnotationCreated', function (annotation) {
         AnnotationsService.createAnnotation(annotation);
