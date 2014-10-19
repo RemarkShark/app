@@ -16,6 +16,7 @@ class Api::V1::AnnotationsController < ApplicationController
   end
 
   api :POST, "/sessions/:session_id/annotations", "Create new annotation for a session"
+  param :annotation, Hash, "All the annotation data"
 
   def create
     annotation = Annotation.create(annotation_params)
