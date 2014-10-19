@@ -17,13 +17,14 @@ angular.module('annotatewithmeApp')
         AnnotationsService.getAllUnpersisted(function(annotations){
           angular.forEach(annotations,function(annot){
             var annotation = annot.value;
-            $http.post(Constants["base_url"]+'sessions/'+$routeParams.sessionId+'/annotations', {annotation: annotation}).then(function(annot){
+            $http.post(Constants["base_url"]+'sessions/'+JSON.parse(sessionStorage.getItem($routeParams.sessionId))["id"]+'/annotations', {annotation: annotation}).then(function(annot){
                   AnnotationsService.deleteAnnotation(annotation["id"]);
                   AnnotationsService.createPersistedAnnotation(annotation);
                   if(annotations.indexOf(annot) == (annotations.length - 1)){
                     syncInProgress = false;
                   }
-                },function(){
+                },function(error){
+                  console.log(error);
                   if(annotations.indexOf(annot) == (annotations.length - 1)){
                     syncInProgress = false;
                   }

@@ -1,19 +1,25 @@
 class Api::V1::SessionsController < ApplicationController
   respond_to :json
 
+  api :GET, "/sessions/:id", "Fetch a session by uniq_hash. Keep in mind that here `:id` will be considered as `uniq_hash`"
+
+  def show
+    session = Session.find_by_uniq_hash(params[:id])
+    respond_with(session)
+  end
+
   api :POST, "/sessions", "Generate new and unique URL (session)"
   param :img_src, String, "Direct Image URL for the session", :required => true
 
-  api :GET, "/sessions/:id", "Fetch a session by uniq_hash"
-  def show 
-    session = Session.find_by_uniq_hash(params[:id])
-    respond_with session
-  end
-  
   def create
-    session = Session.create(img_src: params[:img_src])
+    session = loop do
+      unique_url = Digest::SHA1.hexdigest([Time.now, rand].join)
 
-    session.path = "/sessions/#{session.id}"
+      unless Session.exists?(unique_url)
+        break Session.create(uniq_hash: unique_url, img_src: params[:img_src])
+      end
+    end
+
     respond_with(session, :location => api_v1_sessions_url(session))
   end
 
