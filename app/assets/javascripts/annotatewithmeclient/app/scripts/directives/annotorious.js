@@ -7,11 +7,13 @@
  * # annotorious
  */
 angular.module('annotatewithmeApp')
-  .directive('annotorious', function () {
+  .directive('annotorious', function ($timeout) {
     return {
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
-        anno.makeAnnotatable(element[0]);
+        $timeout(function(){
+          anno.makeAnnotatable(element[0]);
+        }, 1000);
       }
     };
   });
