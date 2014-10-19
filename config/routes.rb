@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     end
   end
 
+  # Any other routes are handled here (as ActionDispatch prevents RoutingError from hitting ApplicationController::rescue_action).
+  match "*path", :to => "application#routing_error", :via => :all
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

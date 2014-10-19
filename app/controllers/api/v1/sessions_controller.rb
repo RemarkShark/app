@@ -30,7 +30,7 @@ class Api::V1::SessionsController < ApplicationController
   param :filters, Array, "To fetch particular type of updates. Eg.: ['annotations'] (the only type that we are supporting currently)"
 
   def transactions
-    filters = params[:filters] ? JSON.parse(params[:filters]) : []
+    filters = params[:filters] || []
     session = Session.find(params[:id])
     objects = []
 
@@ -39,7 +39,7 @@ class Api::V1::SessionsController < ApplicationController
         objects = Annotation.find_all_updates_after(params[:after], session.id)
       else
         filters.each do |filter|
-          objects << eval(filter.classify).find_all_updates_after(params[:after], session.id)
+          objects += eval(filter.classify).find_all_updates_after(params[:after], session.id)
         end
       end
 
