@@ -10,25 +10,30 @@
 angular.module('annotatewithmeApp')
   .controller('AnnotationCtrl',["$scope", "AnnotationsService", function ($scope, AnnotationsService) {
   $scope.annotations = [];
+  var applyPhase = function(){
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
+  };
   var getAnnotationCallback = function(annots){
     angular.forEach(annots,function(obj){
       var annotation = JSON.parse(obj.value);
       $scope.annotations.push(annotation);
       anno.addAnnotation(annotation);
     });
-    $scope.$apply();
+    applyPhase();
   };
 
   AnnotationsService.getAnnotations(getAnnotationCallback);
 	anno.addHandler('onAnnotationCreated', function(annotation) {
     AnnotationsService.createAnnotation($scope.annotations.length, annotation);
   	$scope.annotations.push(annotation);
-    $scope.$apply();
+    applyPhase();
 	});
   anno.addHandler('onAnnotationRemoved', function(annotation) {
     AnnotationsService.deleteAnnotation($scope.annotations.indexOf(annotation));
     $scope.annotations.splice( $scope.annotations.indexOf(annotation), 1 );
-    $scope.$apply();
+    applyPhase();
   });
   anno.addHandler('onAnnotationUpdated', function(annotation) {
     $scope.annotations = $scope.annotations.filter(function(item) {
@@ -43,6 +48,6 @@ angular.module('annotatewithmeApp')
       return true;
     });
     $scope.annotations.push(annotation);
-    $scope.$apply();
+    applyPhase();
   });
 }]);

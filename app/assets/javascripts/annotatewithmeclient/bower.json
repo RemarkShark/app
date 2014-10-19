@@ -12,9 +12,9 @@
     "angular-animate": "~1.2.0",
     "angular-touch": "~1.2.0",
     "angular-route": "~1.2.0",
-    "annotorious-js": "*",
     "lawnchair": "~0.6.4",
-    "underscore": "~1.7.0"
+    "underscore": "~1.7.0",
+    "annotorious-js": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.0",
