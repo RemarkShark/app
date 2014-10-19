@@ -36,6 +36,7 @@ angular
                   deferred.resolve(JSON.parse(foundCached));
                 } else {
                   Session.fetch(sessionId).then(function (foundSession) {
+                    $('head').append('<link rel="prefetch" href="'+ foundSession.data["img_src"] + '">');
                     sessionStorage.setItem(foundSession.data.uniq_hash, JSON.stringify(foundSession.data));
                     deferred.resolve(foundSession.data);
                   });
