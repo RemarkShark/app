@@ -27,7 +27,7 @@ class Api::V1::SessionsController < ApplicationController
 
   api :GET, "/sessions/:id/transactions", "Fetch all updates associated with a session"
   param :after, Integer, "Unix epoch time i.e. '1413618126'. You will get updates that were happened after this time"
-  param :filters, Array, "To fetch particular type of updates. Eg.: 'annotations' (the only type that we are supporting currently)"
+  param :filters, Array, "To fetch particular type of updates. Eg.: ['annotations'] (the only type that we are supporting currently)"
 
   def transactions
     filters = params[:filters] ? JSON.parse(params[:filters]) : []
