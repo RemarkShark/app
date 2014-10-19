@@ -49,3 +49,5 @@ var app = angular
             redirectTo: '/'
           });
     });
+
+	app.run(["Syncmanager", function(Syncmanager){}]);

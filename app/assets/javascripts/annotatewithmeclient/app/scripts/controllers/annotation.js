@@ -32,10 +32,9 @@ angular.module('annotatewithmeApp')
         angular.forEach(annots, function (obj) {
           console.log("obj", JSON.serialize(obj));
           var annotation = obj.value;
-          if($scope.annotations.indexOf(annotation) == -1){
-          	$scope.annotations.push(annotation);
-          	anno.addAnnotation(annotation);
-          }
+          console.log("annotation", annotation);
+          $scope.annotations.push(annotation);
+          anno.addAnnotation(annotation);
         });
         applyPhase();
       };
@@ -49,11 +48,13 @@ angular.module('annotatewithmeApp')
       };
 
       $scope.$on("annotorious-ready", function () {
-        var annotations_poll = function(){
-      		AnnotationsService.getAllUndeleted(getAnnotationCallback);
-      	};
-      	$timeout(annotations_poll, 5000);
+      	AnnotationsService.getAllUndeleted(getAnnotationCallback);
       });
+
+      $scope.$on("annotations-changed", function () {
+        AnnotationsService.getAllUndeleted(getAnnotationCallback);
+      });
+      
 
       $scope.$on("annotations-changed", function () {
         AnnotationsService.getAllUndeleted(getAnnotationCallback);
