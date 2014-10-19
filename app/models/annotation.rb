@@ -10,6 +10,7 @@ class Annotation
   property :shapes, Json, :required => true
   property :context, Text
   property :is_deleted, Boolean, :default => false
+  property :src, Text
   timestamps :at
 
   def self.find_all_updates_after(time, session_id)
