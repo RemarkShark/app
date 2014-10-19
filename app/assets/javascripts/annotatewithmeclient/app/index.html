@@ -45,6 +45,12 @@
 <![endif]-->
 <!-- endbuild -->
 
+<!-- build:js scripts/lawnchair.js -->
+<script src="../bower_components/lawnchair/src/Lawnchair.js"></script>
+<script src="../bower_components/lawnchair/src/plugins/query.js"></script>
+<script src="../bower_components/lawnchair/src/adapters/indexed-db.js"></script>
+<!-- endbuild -->
+
 <!-- build:js(.) scripts/vendor.js -->
 <!-- bower:js -->
 <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -71,12 +77,6 @@
 <script src="bower_components/annotorious-js/annotorious.min.js"></script>
 <script src="bower_components/angular-loading-bar/build/loading-bar.js"></script>
 <!-- endbower -->
-<!-- endbuild -->
-
-<!-- build:js assets/js/lawnchair.js -->
-<script src="../bower_components/lawnchair/src/Lawnchair.js"></script>
-<script src="../bower_components/lawnchair/src/adapters/indexed-db.js"></script>
-<script src="../bower_components/lawnchair/src/plugins/query.js"></script>
 <!-- endbuild -->
 
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
