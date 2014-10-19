@@ -8,9 +8,11 @@
  * Controller of the annotatewithmeApp
  */
 angular.module('annotatewithmeApp')
-    .controller('AnnotationCtrl', ["$scope", "AnnotationsService", function ($scope, AnnotationsService) {
+    .controller('AnnotationCtrl', ["$scope", "AnnotationsService", "$routeParams", function ($scope, AnnotationsService, $routeParams) {
 
       anno.destroy();
+
+      $scope.sessionId = $routeParams.sessionId;
 
       $scope.annotations = [];
 
