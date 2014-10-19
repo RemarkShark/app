@@ -16,19 +16,25 @@ angular.module('annotatewithmeApp')
       $scope.annotations.push(annotation);
       anno.addAnnotation(annotation);
     });
-    $scope.$apply();
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
   };
 
   AnnotationsService.getAnnotations(getAnnotationCallback);
 	anno.addHandler('onAnnotationCreated', function(annotation) {
     AnnotationsService.createAnnotation($scope.annotations.length, annotation);
   	$scope.annotations.push(annotation);
-    $scope.$apply();
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
 	});
   anno.addHandler('onAnnotationRemoved', function(annotation) {
     AnnotationsService.deleteAnnotation($scope.annotations.indexOf(annotation));
     $scope.annotations.splice( $scope.annotations.indexOf(annotation), 1 );
-    $scope.$apply();
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
   });
   anno.addHandler('onAnnotationUpdated', function(annotation) {
     $scope.annotations = $scope.annotations.filter(function(item) {
@@ -43,6 +49,8 @@ angular.module('annotatewithmeApp')
       return true;
     });
     $scope.annotations.push(annotation);
-    $scope.$apply();
+    if(!$scope.$$phase) {
+      $scope.$apply();
+    }
   });
 }]);
