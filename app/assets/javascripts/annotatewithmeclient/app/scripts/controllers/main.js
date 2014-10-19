@@ -11,7 +11,7 @@ angular.module('annotatewithmeApp')
     .controller('MainCtrl', function ($scope, $location, $timeout, Session) {
 
       var openSession = function (session) {
-        $('head').append('<link rel="prefetch" href="'+ session.data["img_src"] + '">');
+        $('head').append('<link rel="prefetch" href="'+ session["img_src"] + '">');
 
         sessionStorage.setItem(session.uniq_hash, JSON.stringify(session));
         $timeout(function () {
