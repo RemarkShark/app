@@ -8,7 +8,7 @@
  * Service in the annotatewithmeApp.
  */
 angular.module('annotatewithmeApp')
-  .service('AnnotationsService', ['Utilities', 'Constants', '$routeParams', function AnnotationsService(Utilities, Constants, $routeParams, Syncmanager) {
+  .service('AnnotationsService', ['Utilities', 'Constants', '$routeParams', function AnnotationsService(Utilities, Constants, $routeParams) {
     var db = new Lawnchair({name: Constants["annotations_db"]+$routeParams.sessionId});
     var unpersisted = {persisted: false, deleted: false};
     this.createAnnotation = function(annotation){
@@ -19,13 +19,11 @@ angular.module('annotatewithmeApp')
       db.save({key: annotation["id"], value:  $.extend(true, annotation, {"deleted": false, "persisted": true})});
     };
     this.getAnnotations = function(callback){
+      var annotations = [];
       db.all(callback);
     };
     this.getAllUndeleted = function(callback){
       db.where('record.value.deleted == false', callback);
-    };
-    this.getAllMarkedDelete = function(callback){
-      db.where('record.value.deleted == true', callback);
     };
     this.updateAnnotation = function(id, annotation){
       db.remove(id);
@@ -36,23 +34,10 @@ angular.module('annotatewithmeApp')
     	db.remove(id);
     };
     this.flagDeletedAnnotation = function(id){
-      var new_id;
-      if(typeof id == "number"){
-        new_id = id
-      }else{
-        new_id = '"'+id+'"';
-      }
-      console.log(new_id);
-      db.where('record.key == '+new_id, function(annotation){
-        if(annotation.length != 0){
+      db.where('record.key == "'+id+'"', function(annotation){
         annotation = annotation[0];
-        if(annotation.value.persisted == true){
-          annotation.value.deleted = true;
-          db.save(annotation);
-        }else{
-          db.remove(id);
-        }
-      }
+        annotation.value.deleted = true;
+        db.save(annotation);
       });
     };
     this.deleteAll = function(){
