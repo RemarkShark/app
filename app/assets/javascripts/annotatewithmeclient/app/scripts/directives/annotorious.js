@@ -11,10 +11,14 @@ angular.module('annotatewithmeApp')
     return {
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
+        var image = element[0];
         $timeout(function(){
-          anno.makeAnnotatable(element[0]);
+          anno.makeAnnotatable(image);
           $rootScope.$broadcast("annotorious-ready");
         }, 1000);
+        scope.$on("$destroy", function(){
+          anno.destroy(image.src)
+        })
       }
     };
   });
