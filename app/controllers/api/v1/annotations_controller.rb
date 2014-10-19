@@ -75,5 +75,4 @@ class Api::V1::AnnotationsController < ApplicationController
   def get_session
     @session = Session.find(params[:session_id])
   end
-
 end
