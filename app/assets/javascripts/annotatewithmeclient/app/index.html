@@ -74,6 +74,12 @@
 <!-- endbower -->
 <!-- endbuild -->
 
+<!-- build:js assets/js/lawnchair.js -->
+<script src="../bower_components/lawnchair/src/Lawnchair.js"></script>
+<script src="../bower_components/lawnchair/src/adapters/indexed-db.js"></script>
+<script src="../bower_components/lawnchair/src/plugins/query.js"></script>
+<!-- endbuild -->
+
 <!-- build:js({.tmp,app}) scripts/scripts.js -->
 <script src="scripts/app.js"></script>
 <script src="scripts/controllers/main.js"></script>
@@ -82,12 +88,9 @@
 <script src="scripts/directives/annotorious.js"></script>
 <script src="scripts/services/annotations_service.js"></script>
 <script src="scripts/services/lawnchair_factory.js"></script>
+<script src="scripts/services/utilities.js"></script>
 <!-- endbuild -->
 
-<!-- build:js assets/js/lawnchair.js -->
-<script src="../bower_components/lawnchair/src/Lawnchair.js"></script>
-<script src="../bower_components/lawnchair/src/adapters/indexed-db.js"></script>
-<!-- endbuild -->
 <!--<script src="scripts/services/lawnchair_factory.js"></script>
   <script src="bower_components/lawnchair/src/Lawnchair.js"></script>
   <script src="bower_components/lawnchair/src/adapters/indexed-db.js"></script>

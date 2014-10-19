@@ -19,7 +19,7 @@ angular.module('annotatewithmeApp')
 
       var getAnnotationCallback = function (annots) {
         angular.forEach(annots, function (obj) {
-          var annotation = JSON.parse(obj.value);
+          var annotation = obj.value;
           $scope.annotations.push(annotation);
           anno.addAnnotation(annotation);
         });
@@ -28,7 +28,7 @@ angular.module('annotatewithmeApp')
 
       $scope.$on("annotorious-ready", function () {
         AnnotationsService.getAnnotations(getAnnotationCallback);
-      })
+      });
 
       anno.addHandler('onAnnotationCreated', function (annotation) {
         AnnotationsService.createAnnotation($scope.annotations.length, annotation);
