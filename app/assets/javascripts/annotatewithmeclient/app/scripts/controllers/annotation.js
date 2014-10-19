@@ -12,7 +12,8 @@ angular.module('annotatewithmeApp')
 
       anno.destroy();
 
-      $scope.sessionId = $routeParams.sessionId;
+      $scope.session = JSON.parse(sessionStorage.getItem($routeParams.sessionId));
+      $scope.session.imgSrc = $scope.session["img_src"];
 
       $scope.annotations = [];
 

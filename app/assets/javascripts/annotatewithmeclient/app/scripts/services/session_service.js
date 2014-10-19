@@ -12,6 +12,9 @@ angular.module('annotatewithmeApp')
       return {
         create: function(imageUrl){
           return $http.post("/api/v1/sessions", {"img_src": imageUrl});
+        },
+        fetch: function(id){
+          return $http.get("/api/v1/sessions/" + id);
         }
       }
     });
