@@ -15,12 +15,12 @@ class Session
     session = self.map { |s| break s if s.uniq_hash == uniq_hash }
     session.is_a?(Array) ? session.first : true
   end
-  
+
   def self.find_by_uniq_hash(uniq_hash)
     session = self.map { |s| break s if s.uniq_hash == uniq_hash }
     session.is_a?(Array) ? session.first : session
   end
-  
+
   def self.find(id)
     session = self.map { |s| break s if s.id == id.to_i }
     session.is_a?(Array) ? session.first : session
@@ -31,7 +31,10 @@ class Session
     annotes = self.annotations
 
     annotes.each do |annote|
-      annotations << annote unless annote.is_deleted
+      unless annote.is_deleted
+        annote.src = annote.session.img_src unless annote.src
+        annotations << annote
+      end
     end
 
     annotations
