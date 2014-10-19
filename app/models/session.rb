@@ -20,4 +20,15 @@ class Session
     session = self.map { |s| break s if s.id == id.to_i }
     session.is_a?(Array) ? session.first : session
   end
+
+  def persisted_annotations
+    annotations = []
+    annotes = self.annotations
+
+    annotes.each do |annote|
+      annotations << annote unless annote.is_deleted
+    end
+
+    annotations
+  end
 end

@@ -44,7 +44,7 @@ class Api::V1::SessionsController < ApplicationController
       end
 
       objects = objects.map do |object|
-        {:type => "create", :object => object}
+        {:type => (object.is_deleted ? "Delete" : "Create/Update"), :object => object}
       end
     end
 
