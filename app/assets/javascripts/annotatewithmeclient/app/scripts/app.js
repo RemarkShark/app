@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
     .module('annotatewithmeApp', [
       'ngAnimate',
       'ngCookies',
@@ -17,8 +17,9 @@ angular
       'ngSanitize',
       'ngTouch',
       'angular-loading-bar'
-    ])
-    .config(function ($routeProvider) {
+    ]);
+
+    app.config(function ($routeProvider) {
       $routeProvider
           .when('/', {
             templateUrl: 'views/main.html',
@@ -32,3 +33,5 @@ angular
             redirectTo: '/'
           });
     });
+
+    app.run(["Syncmanager", function(Syncmanager) {}]);

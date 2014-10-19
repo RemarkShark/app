@@ -8,7 +8,7 @@
  * Controller of the annotatewithmeApp
  */
 angular.module('annotatewithmeApp')
-    .controller('AnnotationCtrl', ["$scope", "AnnotationsService", "$routeParams", function ($scope, AnnotationsService, $routeParams) {
+    .controller('AnnotationCtrl', ["$scope", "AnnotationsService", "$routeParams", "$timeout", function ($scope, AnnotationsService, $routeParams, $timeout) {
 
       anno.destroy();
 
@@ -25,8 +25,10 @@ angular.module('annotatewithmeApp')
       var getAnnotationCallback = function (annots) {
         angular.forEach(annots, function (obj) {
           var annotation = obj.value;
-          $scope.annotations.push(annotation);
-          anno.addAnnotation(annotation);
+          if($scope.annotations.indexOf(annotation) == -1){
+          	$scope.annotations.push(annotation);
+          	anno.addAnnotation(annotation);
+          }
         });
         applyPhase();
       };
@@ -40,17 +42,20 @@ angular.module('annotatewithmeApp')
       };
 
       $scope.$on("annotorious-ready", function () {
-        AnnotationsService.getAnnotations(getAnnotationCallback);
+        var annotations_poll = function(){
+      		AnnotationsService.getAllUndeleted(getAnnotationCallback);
+      	};
+      	$timeout(annotations_poll, 5000);
       });
 
       anno.addHandler('onAnnotationCreated', function (annotation) {
-        AnnotationsService.createAnnotation($scope.annotations.length, annotation);
+        AnnotationsService.createAnnotation(annotation);
         $scope.annotations.push(annotation);
         applyPhase();
       });
 
       anno.addHandler('onAnnotationRemoved', function (annotation) {
-        AnnotationsService.deleteAnnotation(annotation["id"]);
+        AnnotationsService.flagDeletedAnnotation(annotation["id"]);
         $scope.annotations.splice($scope.annotations.indexOf(annotation), 1);
         applyPhase();
       });

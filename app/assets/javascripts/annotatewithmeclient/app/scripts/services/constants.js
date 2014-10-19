@@ -9,6 +9,6 @@
  */
 angular.module('annotatewithmeApp')
   .constant('Constants',{
-  	'base_url': "http://boiling-spire-5369.herokuapp.com/",
+  	'base_url': "http://localhost:3000/api/v1/",//"http://boiling-spire-5369.herokuapp.com/api/v1/",
   	'annotations_db': "annotations"
   });
