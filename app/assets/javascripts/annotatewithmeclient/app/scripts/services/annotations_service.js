@@ -8,9 +8,8 @@
  * Service in the annotatewithmeApp.
  */
 angular.module('annotatewithmeApp')
-  .service('AnnotationsService', ['Utilities',function AnnotationsService(Utilities) {
-    var db_name = "annotations";
-    var db = new Lawnchair({name: db_name});
+  .service('AnnotationsService', ['Utilities', 'Constants', function AnnotationsService(Utilities, Constants) {
+    var db = new Lawnchair({name: Constants["annotations_db"]});
     var unpersisted = {persisted: false};
     this.createAnnotation = function(index, annotation){
     	db.save({key: Utilities.uuid(), value:  $.extend(true, annotation, unpersisted)});
