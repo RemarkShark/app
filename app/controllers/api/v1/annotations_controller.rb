@@ -20,7 +20,7 @@ class Api::V1::AnnotationsController < ApplicationController
 
   def create
     annotation = Annotation.create(annotation_params)
-
+    populate_src(annotation)
     respond_with(annotation, :location => api_v1_session_annotation_url(params[:session_id], annotation))
   end
 
@@ -56,7 +56,7 @@ class Api::V1::AnnotationsController < ApplicationController
   private
   def annotation_params
     annote = params.require(:annotation)
-    {text: annote['text'], shapes: annote['shapes'], context: annote['context'], session_id: params[:session_id]}
+    {text: annote['text'], shapes: annote['shapes'], context: annote['context'], session_id: params[:session_id], src: params[:src]}
   end
 
   def get_annotation
@@ -64,12 +64,19 @@ class Api::V1::AnnotationsController < ApplicationController
       break a if a.id == params[:id].to_i
     end
 
-    if annotations.is_a?(Array)
-      annotations.delete(nil)
-      annotations.first
-    else
-      annotations
-    end
+    annotations = if annotations.is_a?(Array)
+                    annotations.delete(nil)
+                    annotations.first
+                  else
+                    annotations
+                  end
+
+    populate_src(annotations)
+    annotations
+  end
+
+  def populate_src(annotation)
+    annotation.src = annotation.session.img_src unless annotation.src
   end
 
   def get_session
