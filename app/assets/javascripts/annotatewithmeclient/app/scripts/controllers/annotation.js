@@ -28,11 +28,9 @@ angular.module('annotatewithmeApp')
         anno.removeAll();
         $scope.annotations = [];
         applyPhase();
-        console.log("annots", annots);
         angular.forEach(annots, function (obj) {
-          console.log("obj", JSON.stringify(obj));
           var annotation = obj.value;
-          console.log("annotation", annotation);
+          console.log("in get annotation", annotation);
           $scope.annotations.push(annotation);
           anno.addAnnotation(annotation);
         });
@@ -50,11 +48,6 @@ angular.module('annotatewithmeApp')
       $scope.$on("annotorious-ready", function () {
       	AnnotationsService.getAllUndeleted(getAnnotationCallback);
       });
-
-      $scope.$on("annotations-changed", function () {
-        AnnotationsService.getAllUndeleted(getAnnotationCallback);
-      });
-      
 
       $scope.$on("annotations-changed", function () {
         AnnotationsService.getAllUndeleted(getAnnotationCallback);
@@ -79,6 +72,7 @@ angular.module('annotatewithmeApp')
           var dup_annotation = $.extend(true, dup_annotation, annotation);
           delete dup_item["text"];
           delete dup_annotation["text"];
+          console.log(dup_item, dup_annotation);
           if (JSON.stringify(dup_item) == JSON.stringify(dup_annotation)) {
             AnnotationsService.updateAnnotation(item["id"], annotation);
             return false;
