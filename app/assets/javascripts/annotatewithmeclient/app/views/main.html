@@ -5,11 +5,11 @@
 
   <div class="row">
     <div class="col-md-6">
-      <form ng-submit="newSession(image)" role="form">
+      <form ng-submit="newSession(imageUrl)" role="form">
         <h3>Start annotating on an image</h3>
 
         <div class="form-group">
-          <input class="form-control input-lg" type="url" ng-bind="image"
+          <input class="form-control input-lg" type="url" ng-model="imageUrl"
                  placeholder="Enter a web url of image to annotate on"
                  value="https://farm8.staticflickr.com/7050/6921262309_3e13d62965_o_d.jpg"/>
         </div>

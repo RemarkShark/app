@@ -10,6 +10,16 @@ class Session
   property :path, String
   timestamps :at
 
+  def self.exists?(uniq_hash)
+    session = self.map { |s| break s if s.uniq_hash == uniq_hash }
+    session.is_a?(Array) ? session.first : true
+  end
+  
+  def self.find_by_uniq_hash(uniq_hash)
+    session = self.map { |s| break s if s.uniq_hash == uniq_hash }
+    session.is_a?(Array) ? session.first : session
+  end
+  
   def self.find(id)
     session = self.map { |s| break s if s.id == id.to_i }
     session.is_a?(Array) ? session.first : session

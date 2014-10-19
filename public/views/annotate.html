@@ -1,1 +1,20 @@
-<div class="row"> <div class="col-md-9"> <img style="width:100%" src="https://farm8.staticflickr.com/7050/6921262309_3e13d62965_o_d.jpg" annotorious> </div> <div class="col-md-3"> <h3>Annotations:</h3> <ul> <li ng-repeat="item in annotations" ng-mouseenter="addHighlight(item)" ng-mouseleave="removeHighlight()" class="pointer">{{item.text}}</li> </ul> </div> </div>
+<div class="row">
+  <div class="col-md-7">
+    <img style="width:100%" src="https://farm8.staticflickr.com/7050/6921262309_3e13d62965_o_d.jpg" annotorious>
+  </div>
+  <div class="col-md-5">
+    <div id="session-id-container">
+      <span class="info-label text-muted">Your unique session id: </span>
+      <span class="session-id" ng-bind="sessionId"></span>
+    </div>
+
+    <h3 class="text-muted">Comments</h3>
+
+    <div ng-show="annotations.length == 0"><== Click and drag on the image to annotate</div>
+    <ol id="comments">
+      <li ng-repeat="item in annotations" ng-mouseenter="addHighlight(item)" ng-mouseleave="removeHighlight()"
+          class="pointer">{{item.text}}
+      </li>
+    </ol>
+  </div>
+</div>

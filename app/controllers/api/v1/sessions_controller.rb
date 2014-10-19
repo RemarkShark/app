@@ -4,6 +4,12 @@ class Api::V1::SessionsController < ApplicationController
   api :POST, "/sessions", "Generate new and unique URL (session)"
   param :img_src, String, "Direct Image URL for the session", :required => true
 
+  api :GET, "/sessions/:id", "Fetch a session by uniq_hash"
+  def show 
+    session = Session.find_by_uniq_hash(params[:id])
+    respond_with session
+  end
+  
   def create
     session = Session.create(img_src: params[:img_src])
 
